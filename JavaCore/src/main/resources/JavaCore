@@ -1,0 +1,300 @@
+1. Interface
+- Interface : cho phép lớp con kế thừa toàn bộ các thuộc tính và phương thức của lớp cha
+Khi một lớp kế thừa từ một lớp khác, nó có thể sử dụng tất cả các thuộc tính và phương thức của lớp cha đó.
+- Phạm vi truy cập : public
+2. Abstract
+- Trừu tượng là khái niệm cho phép bạn định nghĩa một lớp với các phương thức mà
+ không cần cung cấp một thân phương thức. Lớp trừu tượng không thể khởi tạo trực tiếp,
+ mà chỉ có thể được sử dụng bằng cách kế thừa từ lớp đó và định nghĩa lại các phương thức trừu tượng đó.
+ - phạm vi truy cập: public hoặc protected
+- Khi một nhóm đối tượng có cùng bản chất kế thừa từ một class thì sử dụng abstract class.
+
+- Khi một nhóm đối tượng không có cùng bản chất nhưng chúng có hành động giống nhau thì sử dụng interface.
+3. Overriding vs Overloading: cần hiểu về đa hình
+ - Overloading: trong một lớp có các phương thức cùng tên nhưng khác nhau về số lượng tham số hoặc
+ kiểu dữ liệu của các tham số thì được gọi là nạp chồng
+ - Overriding: là việc định nghĩa lại một phương thức trong một lớp con có cùng tên khi kế
+ thừa lại của lớp cha  nhưng có thể khác về phần thân
+4. Từ khóa final
+ - được dùng cả biến, phương thức, lớp để chỉ định rằng chúng không thể thay đổi sau khi đã khởi tạo
+ - Biến final: Một biến được khai báo là final sẽ không thể thay đổi giá trị sau khi đã được khởi tạo. Biến này chỉ
+ có thể được gán giá trị một lần. Nếu bạn cố gắng gán lại giá trị của một biến final, bạn sẽ nhận được một lỗi biên dịch.
+ VD: final int MAX = 100;
+     MAX = 200; // Lỗi biên dịch
+- Phương thức final: Một phương thức được khai báo là final trong lớp không thể bị ghi đè bởi lớp con của nó. Điều này có
+ nghĩa là phương thức final sẽ luôn được thực thi theo cách của nó trong lớp hiện tại, và không thể được thay đổi bởi lớp con.
+VD:
+ public class Parent {
+    public final void printMessage() {
+        System.out.println("Hello from Parent class");
+    }
+}
+
+public class Child extends Parent {
+    // Cannot override the final method 'printMessage' from Parent
+    // public void printMessage() {
+    //     System.out.println("Hello from Child class");
+    // }
+}
+Trong đoạn mã trên, phương thức printMessage() trong lớp Parent được khai báo là final, nên không thể được ghi đè bởi phương
+thức cùng tên trong lớp Child.
+- Lớp final: Một lớp được khai báo là final không thể được kế thừa bởi lớp nào khác. Điều này có nghĩa là lớp final sẽ không có
+lớp con. Một lớp có thể được khai báo là final để đảm bảo rằng các phương thức và thuộc tính của lớp sẽ không bị thay đổi hoặc ghi đè.
+6. String pool
+- String pool (còn được gọi là constant pool) là một vùng nhớ đặc biệt trong bộ nhớ của JV((Java Virtual Machine) được sử dụng để lưu trữ
+các chuỗi (string) mà được tạo ra trong quá trình chạy chương trình. String pool được sử dụng để tối ưu hóa việc sử dụng bộ nhớ cho các chuỗi
+ được sử dụng nhiều lần trong chương trình.
+        String str1 = "Hello"; // Chuỗi này sẽ được thêm vào String pool
+        String str2 = "Hello"; // Tham chiếu đến chuỗi "Hello" trong String pool
+        String str3 = new String("Hello"); // Chuỗi này không nằm trong String pool
+        String str4 = "Hel" + "lo"; // Tham chiếu đến chuỗi "Hello" trong String pool
+        String str5 = "Hel";
+        String str6 = "lo";
+        String str7 = str5 + str6; // Chuỗi này không nằm trong String pool
+        if(str1 == str4){
+            System.out.println("dung");
+        }else{
+            System.out.println("sai");
+        }
+7.Tham chiếu và tham trị
+- Trong trường hợp tham trị, giá trị của biến được truyền vào phương thức được SAO CHÉP sang một biến mới trong phương thức. Điều này có nghĩa
+là bất kỳ thay đổi nào trên giá trị trong phương thức đều không ảnh hưởng đến giá trị ban đầu của biến.
+(tham trị là truyền gia trị không thay đổi khi vào phương thức, chỉ có thể thay giá trị trong hàm main)
+ Ví dụ:
+ public void doSomething(int x) {
+    x = x + 1; // Thay đổi giá trị x trong phương thức
+}
+
+int a = 10;
+doSomething(a);
+System.out.println(a); // Kết quả sẽ là 10, giá trị của a không bị thay đổi
+
+- Trong trường hợp tham chiếu, một tham chiếu đến đối tượng được truyền vào phương thức thay vì dữ liệu trực tiếp. Điều này có nghĩa là bất kỳ
+thay đổi nào trên đối tượng trong phương thức đều ảnh hưởng đến đối tượng ban đầu được truyền vào.
+ Ví dụ:
+ public void doSomething(List<Integer> list) {
+    list.add(1); // Thêm một phần tử vào danh sách trong phương thức
+}
+
+List<Integer> myList = new ArrayList<>();
+myList.add(10);
+doSomething(myList);
+System.out.println(myList); // Kết quả sẽ là [10, 1], danh sách đã bị thay đổi
+8. Static
+- được sử dụng để chỉ ra rằng một trường, phương thức hoặc lớp là tĩnh, có nghĩa là nó thuộc về lớp chứ không phải một đối tượng cụ thể của lớp đó.
+ Các thành phần tĩnh này có thể được truy cập thông qua tên lớp mà không cần tạo một đối tượng.
+- static variable : một biến được khai báo là static sẽ gọi là biến tĩnh và nó sẽ được gọi thông qua tên lớp mà không cần khởi tạo đối tượng
+- static method một phương thức được khai báo là static sẽ được gọi là phương thức tĩnh và chỉ được truy cập qua lớp. Một phương thức tĩnh không thể truy cập
+vào biến, phương thức không tĩnh và nó chỉ Có thể gọi phương thức tĩnh khác
+- static class : một class được khai báo là một static để sử dụng như một bộ sưu tập các phương thức tĩnh và không thể tạo đối tượng từ lớp này .
+Lớp tĩnh thường được sử dụng để nhóm các phương tĩnh liên quan đến nhau
+9.Mutable và immutable
+- Mutable(thay đổi được) là tính chất của đối tượng có thể thay đổi giá trị của nó sau khi được tạo ra.
+Ví dụ: các đối tượng kiểu List, Set hoặc Map là các đối tượng mutable trong Java.  các phép thêm, sửa hoặc xóa các phần tử cần phải được thực hiện trên đối tượng đó.
+Khi cần tối ưu hiệu suất và sử dụng bộ nhớ. Trong nhiều trường hợp, việc sử dụng các đối tượng mutable có thể giúp giảm thiểu số lượng bộ nhớ cần thiết cho
+ chương trình và tăng tốc độ xử lý(đảm bảo tính toàn vẹn của dữ liệu và tránh xảy ra các lỗi không mong muốn)
+- Immutable (không thay đổi được) là tính chất của đối tượng không thể thay đổi giá trị của nó sau khi được tạo ra.
+Khi một đối tượng immutable được tạo ra, giá trị của nó sẽ không thay đổi trong suốt quá trình chạy chương trình. Đối tượng immutable không cho phép
+ thay đổi trạng thái của nó và được sử dụng để đảm bảo tính toàn vẹn dữ liệu. Ví dụ, các đối tượng kiểu String là các đối tượng immutable trong Java.
+String name = "John";
+String upperCaseName = name.toUpperCase(); // Không thay đổi giá trị của đối tượng name
+10.inner class vs nested class
+- inner class: là một lớp được khai báo trong một lớp khác và nó có thể truy cập vào thành phần private của lớp bao bọc. Inner class có thể đưojc sử dụng để
+triển khai các hành vi cụ thể của một lớp bao bọc, hoặc để giới hạn phạm vi truy cập của các lớp khác vào lớp bao bọc,Inner class có thể là một member class, local
+class hoặc anonymous class(Lớp vô danh)
+vd:
+public class OuterClass {
+    private int x = 10;
+
+    class InnerClass {
+        public void display() {
+            System.out.println("The value of x is " + x);
+        }
+    }
+
+    public void createInnerClass() {
+        InnerClass inner = new InnerClass();
+        inner.display();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        OuterClass outer = new OuterClass();
+        outer.createInnerClass();
+    }
+}
+- nested static class: là một lớp tĩnh được khai báo trong một lớp khác trong một lớp khác và nó không thể truy cập vào các thành phần non-static của lớp bao bọc
+.Nested static class dùng để các nhóm các lớp tĩnh có liên quan đến nhau và không cần truy cập vào các thành phần non-static của lớp bao bọc
+Vd:
+public class OuterClass {
+    private static int x = 10;
+
+    static class NestedStaticClass {
+        public void display() {
+            System.out.println("The value of x is " + x);
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        OuterClass.NestedStaticClass nested = new OuterClass.NestedStaticClass();
+        nested.display();
+    }
+}
+11. Integer pool
+- interger và kiểu dữ liệu nguyên thủy
+- Integer pool là một kỹ thuật được sử dụng trong Java để tối ưu hóa việc sử dụng bộ nhớ khi sử dụng các giá trị nguyên (integer).
+- vd:
+public static void main(String[] args) {
+        Integer i1 = 127;
+        Integer i2 = 127;
+
+        Integer i3 = 128;
+        Integer i4 = 128;
+		// Integer.cache lưu trữ bộ nhớ đệm (cache) các giá trị Integer.
+		Như bạn thấy giá, mặc định giá trị high = 127, low = -128, nên các giá trị được cache trong khoảng từ -128 đến 127.
+
+        Integer i5 = new Integer(127);// tạo 1 đối tượng có kiểu Interger mới
+        Integer i6 = new Integer(127);// tạo 1 đối tượng có kiểu Interger mới
+
+        int i7 = 127;
+
+        System.out.println(i1 == i2); // = true// so sánh địa chỉ bộ nhớ
+
+        System.out.println(i3 == i4); // = false
+        System.out.println(i5 == i6); // = false
+        System.out.println(i1 == i5); // = false
+        System.out.println(i1 == i7); // = true
+    }
+12.Try/catch và Throw Exception là cơ chế xử lý lỗi trong Java.
+- câu lệnh try/catch dùng để bắt và xử lí các ngoại lệ trong một chương trình. Khi chạy chương trình hay một hành động
+có thể không thực hiện được và có thể dẫn đến việc chương trình bị dừng hoặc gặp lỗi. Với try/catch, ta có thể giải quyết các ngoại lệ
+và cho phép chương trình tiếp tục chạy.
+- Throw exception:tạo ra thông báo cho nguwofi dùng hoặc cho hệ thống biết rằng đã có lỗi xảy ra và giúp ng dùng hoặc hệ thống thực hiện các xử lý lỗi phù hợp
+* câu lệnh try/catch đưojc sử dụng để bắt và xử lý các ngoại lệ trong chương trình, trong khi câu lệnh throw được sử dụng để tạo ra các ngoại lệ và thông báo cho người dùng
+hoặc hệ thống biết rằng đã có lỗi
+-  try catch resource :là một cách viết ngắn gọn hơn của try-catch-finally khi làm việc với các tài nguyên (resources) trong Java,
+đặc biệt là các tài nguyên I/O như tệp tin và socket. TCR cho phép ta giải phóng tài nguyên tự động sau khi kết thúc khối try, giúp tránh lãng phí tài nguyên và giảm thiểu sự cố trong quá trình phát triển.
+vd:
+try (BufferedReader br = new BufferedReader(new FileReader("file.txt"))) {
+    // code that uses the BufferedReader
+} catch (IOException e) {
+    // handle the exception
+}
+- có hai loại exception :
++ Checked Exception: Đây là các ngoại lệ mà Java yêu cầu bạn phải xử lý bằng cách sử dụng try-catch hoặc khai báo nó bằng từ khóa throws. Các checked exception là các tình huống mà chương trình không
+ thể xử lý được mà phải dừng lại, ví dụ như IOException hoặc ClassNotFoundException.
++ Unchecked Exception: Đây là các ngoại lệ không yêu cầu bạn phải xử lý mà có thể được xảy ra bất cứ lúc nào trong quá trình thực thi chương trình. Các unchecked exception thường là các lỗi logic hoặc
+lỗi do người dùng nhập liệu sai. Ví dụ như NullPointerException, ArrayIndexOutOfBoundsException hoặc IllegalArgumentException.
+13. Synchronize vs Asynchronize
+- Synchronize : xử lí đồng bộ, một tác vụ phải hoàn thành trước khi một tác vụ vụ tiếp theo có thể thực hiện. Các tác vụ phải thực hiện một cách tuần tự và chương trình
+phải chờ đợi cho đến khi tác vụ hiện tại hoàn thành trước khi bắt đầu tác vụ tiếp theo
+- Asynchronous : các tác vụ có thể được thực hiện một cách độc lập và không cần đợi đến khi tác vụ trước đó hoàn thành. Thay vì chờ đợi kết quả từ một tác vụ trước đó, chương trình có thể tiếp tục thực hiện
+ các tác vụ khác trong khi tác vụ đang được thực hi. Trong Java, xử lý bất đồng bộ được thực hiện thông qua việc sử dụng cơ chế Callback hoặc Future.
+14. String vs String Buffer vs String Builder
+- String: một kiểu dữ liejeu nguyên thủy. String: là một kiểu dữ liệu không thể thay đổi (immutable). Khi ta khởi tạo một đối tượng String và thay đổi giá trị của nó, một đối tượng mới sẽ được tạo
+ra thay vì thay đổi giá trị của đối tượng cũ. Do đó, việc sử dụng nhiều đối tượng String trong một vòng lặp hoặc trong các tác vụ cần thay đổi nội dung của chuỗi sẽ tốn nhiều bộ nhớ và làm chậm hiệu suất của chương trình.
+- StringBuffer: là một kiểu dữ liệu có thể thay đổi (mutable), được sử dụng để thay đổi nội dung của chuỗi. StringBuffer có các phương thức để thêm, xoá và sửa đổi các ký tự trong chuỗi một cách hiệu quả. Nó được đồng bộ
+hóa, nghĩa là nó an toàn trong các môi trường đa luồng (multi-threaded environment).
+- StringBuilder: cũng là một kiểu dữ liệu có thể thay đổi (mutable) và tương tự như StringBuffer. Tuy nhiên, nó không được đồng bộ hóa, do đó nó có thể đạt được hiệu suất cao hơn trong các ứng dụng đơn luồng
+ (single-threaded environment).
+ * Nếu chương trình không cần sửa đổi nội dung của chuỗi, thì nên sử dụng kiểu dữ liệu String để tiết kiệm bộ nhớ. Nếu chương trình cần sửa đổi nội dung của chuỗi, thì ta nên sử dụng StringBuffer hoặc StringBuilder
+ tùy thuộc vào môi trường đang chạy. Nếu chương trình đang chạy trong môi trường đa luồng, thì ta nên sử dụng StringBuffer để đảm bảo tính đồng bộ và an toàn. Nếu chương trình đang chạy trong môi trường đơn luồng,
+ thì ta có thể sử dụng StringBuilder để đạt được hiệu suất cao hơn
+15. Lambda
+ - lambda là một tính năng trong Jva cho phép bạn định nghĩa và sử dụng các hàm ẩn danh để truyền vào các phương thức khác như một tham số hoặc một biểu thức
+ Có bốn loại lambda trong java: Predicate, Function, Consumer và method reference:
+ + Predicate: là một lambda function, chấp nhân đầu vào là một đối tượng và trả về một giá trị boolean. Predicate được  sử dụng để kiểm tra một điều kiện và trả về true hoặc false
+ + Function: là một lambda function, chấp nhận đầu vào là một đối tượng và trả về một đối tượng khác. Function dùng để chuyển đổi một đối tượng này thành đối tượng khác
+ + Consumer: là một lambda function chấp nhận đầu vào là một đối tượng và không trả về giá trị nào. Consumer được sử dụng để thực hiện một tác với đối tượng đó
+ + method reference: cho phép bạn truy cập trực tiếp đến một phương thức hoặc constructor của một đối tượng. Method reference có thể được sử dụng để viết code ngắn gọn và dễ đọc hơn
+16. Collection
+ - Collection là một interface trong Java mô tả một nhóm các đối tượng được sử dụng để lưu trữ và quản lý các phần tử của một nhóm đối tượng, mà không quan tâm đến thứ tự các phần tử đó. Collection bao gồm nhiều
+ loại khác nhau như List, Set, Queue và Deque.
+ + List: là một collection dùng để lưu trữ danh sách các phần tuwe , có thể chứa các phần tử trùng lặp và giữ nguyên thứ tự của các phần tử list cung cấp nhiều phương thức để tru xuất và sắp xếp các phần tử
+ + set : là một collection không chứa các phần tử trùng lặp. Set cung cấp phuonwg thức để kiểm tra sự tồn tại của phần tử trong set
+ + Queue: là một collection dùng để lưu trữ danh sách các phần tử , giống như list tuy nhiên Queue chỉ cho phép thêm phần tử vào cuối danh sách và lấy phần tử đầu tiên ra khỏi danh sách
+ + Deque: là một collection hỗ trợ việc thêm và lấy phần tử ở cả hai đầu của danh sách (Double_ended_Queue)
+ + Map là một collection lưu trữ các phần tử theo cặp key value. mỗi phần từ đưojc truy xuất thông qua key của nó
+ - Collection stream à một tính năng được giới thiệu trong Java 8 để thao tác với dữ liệu trong một collection một cách hiệu quả, đồng thời cung cấp cho chúng ta nhiều phương thức xử lý dữ liệu
+ như filter, map, reduce, flatMap, collect:
+ + filter(): Lọc các phần tử thỏa mãn điều kiện được xác định bởi một Predicate.
+ VD:
+ List<Integer> numbers = Arrays.asList(1, 6, 3, 8, 5, 9, 2);
+List<Integer> result = numbers.stream()
+                                .filter(n -> n > 5)
+                                .collect(Collectors.toList());
+System.out.println(result); // output: [6, 8, 9]
+ + map(): Chuyển đổi các phần tử thành các phần tử khác bằng cách áp dụng một Function.
+VD:
+List<String> stringList = Arrays.asList("1", "2", "3", "4", "5");
+List<Integer> integerList = stringList.stream()
+                                        .map(Integer::valueOf)
+                                        .collect(Collectors.toList());
+System.out.println(integerList); // output: [1, 2, 3, 4, 5]
++ reduce(): Kết hợp các phần tử trong Collection thành một giá trị duy nhất bằng cách áp dụng một phép toán nhất định.
+VD:
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+int sum = numbers.stream()
+                    .reduce(0, Integer::sum);
+System.out.println(sum); // output: 15
++ forEach(): Thực hiện một tác vụ trên từng phần tử trong Collection.
+VD:
+List<String> names = Arrays.asList("Alice", "Bob", "Charlie", "Dave");
+names.stream()
+        .forEach(System.out::println);
+// output:
+// Alice
+// Bob
+// Charlie
+// Dave
++ sorted(): Sắp xếp các phần tử trong Collection theo thứ tự tăng dần hoặc giảm dần.
++ distinct(): Lấy ra các phần tử duy nhất trong Collection.
+VD:
+List<Integer> numbers = Arrays.asList(1, 2, 3, 2, 4, 3, 5);
+List<Integer> distinctNumbers = numbers.stream()
+                                        .distinct()
+                                        .collect(Collectors.toList());
+System.out.println(distinctNumbers); // output: [1, 2, 3, 4, 5]
++ limit(): Giới hạn số lượng phần tử được xử lý trong Collection.(lấy ra số phần tử bạn muốn)
+VD:
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+List<Integer> result = numbers.stream()
+                                .limit(3)
+                                .collect(Collectors.toList());
+System.out.println(result); // output: [1, 2, 3]
++ FlatMap: Chuyển đổi một List các List thành một List duy nhất.
+VD:
+List<List<Integer>> nestedNumbers = Arrays.asList(Arrays.asList(1, 2), Arrays.asList(3, 4, 5), Arrays.asList(6, 7, 8, 9));
+List<Integer> flattenedNumbers = nestedNumbers.stream()
+                                                .flatMap(Collection::stream)
+                                                .collect(Collectors.toList());
+System.out.println(flattenedNumbers); // output: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+- Collections là một lớp tiện ích trong Java cung cấp một số phương thức tĩnh để thao tác với các đối tượng Collection.
+Collections cung cấp các phương thức như sort(), binarySearch(), reverse(), shuffle() để thực hiện các hoạt động trên các Collection.
+Collections là một lớp tiện ích nên nó không phải là một loại Collection. Collections là một tập hợp các phương thức tĩnh được sử dụng
+để thao tác với Collection. Trong khi đó, Collection là một interface miêu tả các tính năng của một loại cụ thể của Collection như List, Set, Queue và Deque.
+17. ArrayList vs LinkedList
+- ArrayList:
++ tốt hơn trong việc lưu trữ và truy xuất dữ liệu
++ Truy cập các phần tử trong arraylist nhanh hơn linkedlist . bởi vì các phần tử trong Arraylist được lưu trữ dựa trên chỉ mục(index)
++ ArrayList sử dụng mảng động để lưu trữ các phần tử
+- linkedlist
++ tốt hơn trong việc thao tác dữ liệu (thêm/xóa)
++ thao tác truy xuất phần tử trong linkedlist chậm hơn nhiều so với arraylist. Bởi vì nó phải duyệt qua lần luwojt các phần từ từ đầu đến cuối
++ linkedlist sử dụng danh sách liên kết(Doubly linked list) để lưu trữ các phần tử
+18 . Lambda
+- Nó cung cấp một cách rõ ràng và ngắn ngọn để đại diện cho một phương thức interface sử dụng một biểu thức. Nó rất hữu ích trong thư viện collection.
+Nó giúp duyệt, lọc và trích xuất dữ liệu từ collection.
+- biểu thức lambda trong java gồm có 3 thành phần sau:
++ Argument list: nó có thể để trống hoặc không
++ Arrow-token: nó được sử dụng để liene kết arguments-list vs body của biểu thức
++ body nó chứa các biểu thức và câu lệnh cho biểu thức lambda
+19. Enum
+- là một kiểu dữ liệu được định nghĩa trước, cho phép định nghĩa một tập hợp các hằng số có giá trị cố định. Các hằng số trong enum thường là các biếu diễn cho các giá trị có ý nghĩa cố định
+20.generic
+-generic là một tính năng cho phép bạn tạo lớp hoặc phương thức có thể hoạt động trên nhiều loại đối tượng khác nhau mà không cần phải viết lại mã.
+?????
+khi nào nên dùng interface và abstract class
