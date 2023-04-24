@@ -1,15 +1,23 @@
 1. Interface
 - Interface : cho phép lớp con kế thừa toàn bộ các thuộc tính và phương thức của lớp cha
 Khi một lớp kế thừa từ một lớp khác, nó có thể sử dụng tất cả các thuộc tính và phương thức của lớp cha đó.
-- Phạm vi truy cập : public
+- các trường của nó trong Interface phải là "public static final"
+-  các method của nó đều là trừu tượng
+- kế thừa một class  và implement nhiều interface
+- không có contructor
+- khuân mẫu thì dùng interface
+- có thân hàm từ java 8 thông qua defaut và static
+- Dùng khi xây dựng một bộ khung chuẩn của hệ thống mà các module phải có. Các module phải implement các chức năng đã được định nghĩa.
+- Phạm vi truy cập : mặc định public
 2. Abstract
+- properti giống vs thk cha thì nên dùng abstarct
+- khi mà thk cha có các phương thức chung chung mà muốn mô tả rõ các phương thức cho class con thfi nên dùng abstract
 - Trừu tượng là khái niệm cho phép bạn định nghĩa một lớp với các phương thức mà
- không cần cung cấp một thân phương thức. Lớp trừu tượng không thể khởi tạo trực tiếp,
+ không cần cung cấp một thân phương thức. Lớp trừu tượng không thể khởi tạo đối tượng trực tiếp,
  mà chỉ có thể được sử dụng bằng cách kế thừa từ lớp đó và định nghĩa lại các phương thức trừu tượng đó.
- - phạm vi truy cập: public hoặc protected
-- Khi một nhóm đối tượng có cùng bản chất kế thừa từ một class thì sử dụng abstract class.
-
-- Khi một nhóm đối tượng không có cùng bản chất nhưng chúng có hành động giống nhau thì sử dụng interface.
+- có thể có phương thức hoàn thiện
+- phạm vi truy cập: public hoặc protected
+- Dùng khi muốn xây dựng một vài tính năng chuẩn của hệ thống, các chức năng còn lại các lớp Extends phải hoàn thành.
 3. Overriding vs Overloading: cần hiểu về đa hình
  - Overloading: trong một lớp có các phương thức cùng tên nhưng khác nhau về số lượng tham số hoặc
  kiểu dữ liệu của các tham số thì được gọi là nạp chồng
@@ -177,6 +185,7 @@ và cho phép chương trình tiếp tục chạy.
 hoặc hệ thống biết rằng đã có lỗi
 -  try catch resource :là một cách viết ngắn gọn hơn của try-catch-finally khi làm việc với các tài nguyên (resources) trong Java,
 đặc biệt là các tài nguyên I/O như tệp tin và socket. TCR cho phép ta giải phóng tài nguyên tự động sau khi kết thúc khối try, giúp tránh lãng phí tài nguyên và giảm thiểu sự cố trong quá trình phát triển.
+- try-catch-finally, chúng ta phải mở tài nguyên trong khối try, sau đó đóng tài nguyên trong khối finally. Điều này có thể dẫn đến việc mã lệnh lặp lại, khó hiểu và dễ gây lỗi nếu quản lý tài nguyên không được thực hiện chính xác.
 vd:
 try (BufferedReader br = new BufferedReader(new FileReader("file.txt"))) {
     // code that uses the BufferedReader
@@ -298,3 +307,66 @@ Nó giúp duyệt, lọc và trích xuất dữ liệu từ collection.
 -generic là một tính năng cho phép bạn tạo lớp hoặc phương thức có thể hoạt động trên nhiều loại đối tượng khác nhau mà không cần phải viết lại mã.
 ?????
 khi nào nên dùng interface và abstract class
+21. Hashmap và HashSet
+- HashMap trong Java được thiết kế để lưu trữ các đối tượng (object reference), chứ không phải là các kiểu dữ liệu nguyên thủy (primitive data types) như int hay double.
+Tuy nhiên, để lưu trữ các giá trị nguyên thủy như int hay double trong HashMap, Java cung cấp các wrapper class như Integer hoặc Double để chuyển đổi
+ giá trị nguyên thủy thành các đối tượng.
+
+- Việc sử dụng wrapper class như Integer hoặc Double có một số lợi ích. Đầu tiên, chúng cho phép ta thực hiện các phép toán và so sánh giữa các giá trị nguyên thủy.
+ Thứ hai, chúng cung cấp các phương thức hỗ trợ cho việc chuyển đổi giá trị nguyên thủy sang chuỗi (string) và ngược lại.
+
+- Thêm vào đó, khi lưu trữ giá trị nguyên thủy trong HashMap dưới dạng đối tượng wrapper class, ta có thể sử dụng phương thức equals() để so sánh giá trị
+của hai đối tượng, thay vì so sánh địa chỉ vùng nhớ như khi sử dụng toán tử ==. Điều này giúp ta tránh được một số lỗi khi so sánh các giá trị nguyên thủy trong HashMap.
+
+Do đó, để sử dụng các kiểu dữ liệu nguyên thủy trong HashMap, ta nên sử dụng các wrapper class tương ứng để chuyển đổi giá trị thành các đối tượng và lưu trữ chúng trong HashMap.
+
+- checked và unchecked
+
+- try catch resoure
+22. luồng đi của thread:
+Luồng đi của một thread được quyết định bởi các câu lệnh mà nó thực hiện trong quá trình thực thi. Một thread được bắt đầu bằng cách gọi phương thức start() và kết thúc khi phương thức run()
+hoàn thành. Trong quá trình thực thi, một thread có thể có nhiều trạng thái khác nhau, bao gồm:
+
+    New: Thread được tạo ra nhưng chưa được bắt đầu thực thi.
+    Runnable: Thread đã được bắt đầu thực thi và đang chạy trong bộ lập lịch (scheduler) của hệ thống.
+    Blocked: Thread bị chặn bởi một tài nguyên hoặc một hoạt động đợi, chẳng hạn như đợi một lock được giải phóng bởi một thread khác hoặc đợi dữ liệu được đọc từ đĩa.
+    Waiting: Thread đang đợi một tín hiệu từ một thread khác để tiếp tục thực thi.
+    Timed Waiting: Thread đang đợi một khoảng thời gian nhất định để tiếp tục thực thi.
+    Terminated: Thread đã kết thúc thực thi và không thể bắt đầu lại.
+
+Một thread có thể chuyển đổi giữa các trạng thái này trong quá trình thực thi.
+23. DeadLock
+- Deadlock là một trạng thái xảy ra khi hai hoặc nhiều luồng bị chặn đứng và đang chờ đợi lẫn nhau để giải phóng tài nguyên mà mình đang giữ, mà không ai trong số các luồng
+ đó sẽ thực hiện hành động giải phóng tài nguyên đó. Kết quả là tất cả các luồng đó bị đứng đợi mãi mà không thể
+tiếp tục thực thi. Deadlock thường là một vấn đề nguy hiểm trong lập trình đa luồng, và có thể dẫn đến hiện tượng "treo" (hang) hoặc "đóng băng" (freeze) của hệ thống.
+24. Tại sao List<String> list = new ArrayList<>(); nên sử dụng cách này
+ -   Đối tượng được khởi tạo có thể thêm hoặc xóa phần tử một cách dễ dàng, mà không cần quan tâm đến số lượng phần tử của đối tượng ban đầu.
+
+ -  Nếu chúng ta không biết trước số lượng phần tử cần lưu trữ, thì khởi tạo một ArrayList rỗng là tối ưu.
+
+ -  Sử dụng interface List và lớp ArrayList cho phép ta thay đổi triển khai của List trong tương lai, nếu cần thiết, mà không làm thay đổi mã nguồn của các phần khác sử dụng List.
+25.Enum : in enum có theo thứu tự không
+-Có, trong enum ta có thể xác định được thứ tự các phần tử bằng cách sử dụng thuộc tính ordinal() của enum. Phương thức này trả về chỉ số của phần tử trong định nghĩa enum, bắt đầu từ 0. Ví dụ:
+
+ java
+
+ enum Days {
+   MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
+ }
+
+ public static void main(String[] args) {
+   for (Days day : Days.values()) {
+     System.out.println(day + " - " + day.ordinal());
+   }
+ }
+
+ Đoạn code trên sẽ in ra các phần tử trong enum Days theo thứ tự của ordinal(), bắt đầu từ 0.
+ 26. enum class là gì
+ 27.Ví dụ về truyền tham trị của đối tượng:
+- final chỉ đảm bảo rằng biến đối tượng không thể trỏ đến một đối tượng khác, không phải là giá trị của đối tượng không thể thay đổi.
+   Điều này cho phép chúng ta bảo vệ đối tượng ban đầu mà không cần tạo một bản sao (copy) của nó.
+28.tại sao không dùng try catch bình thường mà phải dùng try catch resoure
+-khi ta làm việc với các tài nguyên như file, socket, database connection, ... thì sau khi sử dụng chúng, ta cần phải đóng (close) tài nguyên đó để giải phóng bộ nhớ và ngăn ngừa các lỗi liên quan đến việc sử dụng tài nguyên.
+- việc đóng tài nguyên này có thể gây ra các lỗi như IOException hoặc SQLException, và nếu không xử lý các lỗi này, chúng ta có thể gặp phải các vấn đề liên quan đến bộ nhớ hoặc tài nguyên không được giải phóng.
+- Java cung cấp cho chúng ta cấu trúc try-catch-finally, tuy nhiên, khi sử dụng try-catch-finally thông thường, chúng ta cần phải đóng tài nguyên trong khối finally, điều này có thể dẫn đến việc mã lặp lại (boilerplate code) và làm cho mã của chúng ta khó đọc và bảo trì.
+-Để giải quyết vấn đề này, Java cung cấp cho chúng ta try-with-resources, còn được gọi là try-with-resource, đây là một cách để xử lý tài nguyên mà không cần phải sử dụng khối finally. Thay vào đó, chúng ta sẽ khai báo tài nguyên trong khối try, và Java sẽ tự động đóng tài nguyên đó khi khối try kết thúc, bất kể có lỗi xảy ra hay không.

@@ -1,0 +1,19 @@
+1.Spring bean
+1.1 Pojo
+- POJO(Plain Old Java Object) là một class có các trường, thuộc tínhvà các getter và setter để truy cập các thuộc tính này.
+- Lớp POJO có thể có hoặc không thể triển khai giao diện Serializable
+- Chúng ta có thể truy cập trực tiếp vào các trường bằng tên của chúng
+1.2 JavaBean
+- Java Beans là một loại POJO đặc biệt.
+- Tất cả Java Beans có thể là POJO nhưng tất cả các lớp POJO không thể là Java Beans
+- Java Beans nên triển khai giao diện Serializable
+- Tất cả các trường phải có phương thức getter hoặc setter hoặc cả hai
+1.3 Spring bean
+- Spring Beans chính là những Java Object mà từ đó tạo nên khung sườn của một Spring application.
+- bất kì object nào trong Spring framework mà chúng ta khởi tạo thông qua Spring container đưojc gọi là Spring bean
+Spring cung cấp 3 cách để cấu hình Bean:
++ Annotation Based Configuration – Bằng việc sử dụng @Service hoặc @Component annotations. Chi tiết về Scope có thể được cung cấp bởi @Scope annotation.
++ XML Based Configuration – Bằng việc tạo file XML Spring Configuration để config beans.
++ Java Based Configuration – Đươc tích hợp từ Spring 3.0, chúng ta có thể configure Spring beans sử dụng chương trình java. Một vài annotations quan trọng được sủ dụng cho config dựa trên java là @Configuration, @ComponentScan và @Bean.
+2.Spring Component
+- là các dánh dấu một class là một bean trong Application context. Nó dùng trong khi tiêm các class để dùng phương thức của class được tiêm

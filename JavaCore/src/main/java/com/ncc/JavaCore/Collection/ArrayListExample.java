@@ -1,5 +1,7 @@
 package com.ncc.JavaCore.Collection;
 
+import com.ncc.JavaCore.Collection.Map.HashMap.HashMapExample;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

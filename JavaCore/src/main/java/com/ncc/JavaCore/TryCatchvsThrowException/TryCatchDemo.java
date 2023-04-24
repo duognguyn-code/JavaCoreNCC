@@ -7,6 +7,8 @@ public class TryCatchDemo {
         try {
             int data = 5 / 0;
         } catch (ArithmeticException e) {
+            //Lớp này được sử dụng để đại diện cho các ngoại
+            // zlệ xảy ra trong quá trình thực hiện các phép tính số học.
             //In ra màn hình tên ngoại lệ
             System.out.println(e);
         }

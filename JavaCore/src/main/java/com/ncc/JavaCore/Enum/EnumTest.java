@@ -37,5 +37,8 @@ public class EnumTest {
 //        sixthDay.tellItLikeItIs();
 //        EnumTest seventhDay = new EnumTest(Day.SUNDAY);
 //        seventhDay.tellItLikeItIs();
+        for (Day day:Day.values()) {
+            System.out.println(day + " - " + day.ordinal());
+        }
     }
 }

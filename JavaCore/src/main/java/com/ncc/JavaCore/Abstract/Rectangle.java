@@ -8,4 +8,17 @@ public class Rectangle extends Figure{
     public float getArea() {
         return length * width;
     }
+
+
+    @Override
+    protected int GetData() {
+        return 0;
+    }
+
+    @Override
+    void dosomething() {
+
+    }
+
+
 }
